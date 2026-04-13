@@ -1,0 +1,173 @@
+:root {
+    --goku-orange: #F85C1B;
+    --goku-blue: #2B3D8F;
+    --goku-yellow: #FFD500;
+    --bg-light: #f4f4f4;
+    --text-dark: #333;
+    --user-msg: #d1e7dd;
+    --goku-msg: #fff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--goku-blue);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav { display: flex; justify-content: space-around; }
+
+nav button {
+    background: none;
+    border: 2px solid var(--goku-yellow);
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav button:hover { background-color: var(--goku-orange); }
+nav button.active { background-color: var(--goku-orange); }
+
+main#root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.view-content {
+    animation: fadeIn 0.4s ease;
+    width: 100%;
+    max-width: 800px;
+}
+
+/* ---- HOME ---- */
+.home-container { text-align: center; padding: 2rem 0; }
+.home-container h1 { color: var(--goku-blue); font-size: 2rem; margin-bottom: 1rem; }
+.home-container p  { font-size: 1.1rem; margin-bottom: 2rem; color: #555; }
+
+#btn-start {
+    background-color: var(--goku-orange);
+    color: white;
+    border: none;
+    padding: 0.9rem 2.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#btn-start:hover { background-color: var(--goku-blue); }
+
+/* ---- ABOUT ---- */
+.about-container { padding: 1rem 0; }
+.about-container h1 { color: var(--goku-blue); margin-bottom: 1rem; }
+.about-container p  { margin-bottom: 0.8rem; color: #555; }
+
+/* ---- CHAT ---- */
+.chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
+    width: 100%;
+}
+
+#chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 80%;
+    padding: 0.8rem 1rem;
+    border-radius: 15px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: var(--user-msg);
+    border-bottom-right-radius: 3px;
+}
+
+.goku-message {
+    align-self: flex-start;
+    background-color: var(--goku-msg);
+    border: 1px solid var(--goku-orange);
+    border-bottom-left-radius: 3px;
+}
+
+.loading-message { opacity: 0.6; font-style: italic; }
+
+.input-area {
+    display: flex;
+    gap: 10px;
+}
+
+#user-input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+#user-input:focus { border-color: var(--goku-orange); }
+
+#send-btn {
+    background-color: var(--goku-orange);
+    color: white;
+    border: none;
+    padding: 0 1.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+#send-btn:hover { background-color: var(--goku-blue); }
+#send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.8rem;
+    background: #ddd;
+}
+
+@media (min-width: 768px) {
+    .chat-wrapper { height: 80vh; }
+}

@@ -1,68 +1,72 @@
 import { setupChat } from './chat.js';
 
-// 1. Definimos las vistas primero para que estén disponibles
+const root = document.getElementById('root');
+
 const views = {
     home: `
-        <section id="home-view">
-            <h1>¡Hola, soy Goku!</h1>
-            <p>¿Estás listo para entrenar tus habilidades de programación?</p>
-            <button id="start-chat">Ir al entrenamiento</button>
-        </section>
-    `,
+        <div class="view-content">
+            <div class="home-container">
+                <h1>¡Bienvenido, Guerrero Z!</h1>
+                <p>Entrena tu mente conversando con el Saiyajin más fuerte del universo.</p>
+                <button id="btn-start">¡Empezar ahora!</button>
+            </div>
+        </div>`,
     chat: `
-        <section id="chat-view">
-            <div id="chat-container">
+        <div class="view-content">
+            <div class="chat-wrapper">
                 <div id="chat-messages"></div>
-                <div id="chat-input-area">
-                    <input type="text" id="user-input" placeholder="Escribe un mensaje...">
+                <div class="input-area">
+                    <input type="text" id="user-input" placeholder="Escríbele algo a Goku..." autocomplete="off">
                     <button id="send-btn">Enviar</button>
                 </div>
             </div>
-        </section>
-    `,
+        </div>`,
     about: `
-        <section id="about-view">
-            <h2>Sobre este Proyecto</h2>
-            <p>Un chatbot de entrenamiento inspirado en Dragon Ball, creado para el PI 3.</p>
-        </section>
-    `
+        <div class="view-content">
+            <div class="about-container">
+                <h1>Sobre el Proyecto</h1>
+                <p>Esta aplicación fue creada como Proyecto Integrador 3 de Henry.</p>
+                <p>Permite conversar con Goku usando la API de Gemini AI, desplegada en Vercel con una Serverless Function como proxy seguro.</p>
+                <p><strong>Tecnologías:</strong> JavaScript vanilla, History API, Vercel Serverless Functions, Google Gemini AI, Vitest.</p>
+            </div>
+        </div>`
 };
 
-const root = document.getElementById('root');
+function setActiveNav(route) {
+    document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+    if (route === '/' || route === '/home') document.getElementById('nav-home').classList.add('active');
+    else if (route === '/chat')  document.getElementById('nav-chat').classList.add('active');
+    else if (route === '/about') document.getElementById('nav-about').classList.add('active');
+}
 
-// 2. Función para renderizar el contenido según la ruta
-function render(path) {
-    if (path === '/chat') {
+function renderView(route) {
+    const path = route === '/' ? '/home' : route;
+    setActiveNav(route);
+
+    if (path === '/home') {
+        root.innerHTML = views.home;
+        document.getElementById('btn-start').addEventListener('click', () => navigate('/chat'));
+    } else if (path === '/chat') {
         root.innerHTML = views.chat;
-        setupChat(); // Inicializa la lógica del chat cada vez que entramos [cite: 90]
+        setupChat();
     } else if (path === '/about') {
         root.innerHTML = views.about;
     } else {
+        // Ruta desconocida → home
         root.innerHTML = views.home;
-        // Listener para el botón de la landing
-        const startBtn = document.getElementById('start-chat');
-        if (startBtn) {
-            startBtn.addEventListener('click', () => navigate('/chat'));
-        }
+        document.getElementById('btn-start').addEventListener('click', () => navigate('/chat'));
     }
 }
 
-// 3. Función para navegar usando History API [cite: 11, 60]
 function navigate(path) {
-    window.history.pushState({}, path, window.location.origin + path);
-    render(path);
+    window.history.pushState({}, '', path);
+    renderView(path);
 }
 
-// 4. Manejo del evento popstate (Botones atrás/adelante del navegador) [cite: 61, 117]
-window.addEventListener('popstate', () => {
-    render(window.location.pathname);
-});
+document.getElementById('nav-home').addEventListener('click',  () => navigate('/home'));
+document.getElementById('nav-chat').addEventListener('click',  () => navigate('/chat'));
+document.getElementById('nav-about').addEventListener('click', () => navigate('/about'));
 
-// 5. Carga inicial
-document.addEventListener('DOMContentLoaded', () => {
-    render(window.location.pathname);
+window.addEventListener('popstate', () => renderView(window.location.pathname));
 
-    document.getElementById('nav-home').addEventListener('click', () => navigate('/'));
-    document.getElementById('nav-chat').addEventListener('click', () => navigate('/chat'));
-    document.getElementById('nav-about').addEventListener('click', () => navigate('/about'));
-});
+renderView(window.location.pathname);

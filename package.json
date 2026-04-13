@@ -1,5 +1,15 @@
 {
+  "name": "habla-con-goku",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "dev": "vercel dev"
+  },
   "devDependencies": {
     "vitest": "^4.1.4"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1"
   }
 }
