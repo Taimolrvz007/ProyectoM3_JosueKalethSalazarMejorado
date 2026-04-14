@@ -1,4 +1,3 @@
-// Respuestas predefinidas de Goku para testing (no gastan API key)
 const MOCK_RESPONSES = [
     "¡Ei! ¡Eso me recuerda cuando entrené en el Hiperbólico! ¡Tuve que superar mis propios límites!",
     "¡Kakarot jamás se rinde! Si quieres ser fuerte, ¡tienes que entrenar sin parar!",
@@ -16,8 +15,8 @@ let mockIndex = 0;
 let chatHistory = [];
 let isWaiting = false;
 
-// Cambia a true para usar la API real de Gemini
-const USE_REAL_API = false;
+
+const USE_REAL_API = true;
 
 export function setupChat() {
     const chatMessages = document.getElementById('chat-messages');
@@ -29,7 +28,7 @@ export function setupChat() {
         return;
     }
 
-    // Mensaje de bienvenida
+    
     renderMessage('goku', '¡Ei! ¡Soy Goku! ¿De qué quieres hablar, guerrero?', chatMessages);
 
     const handleSend = async () => {
@@ -76,18 +75,18 @@ export function setupChat() {
     });
 }
 
-// ---- Respuesta falsa (para testing) ----
+
 function mockGeminiResponse() {
     return new Promise((resolve) => {
         setTimeout(() => {
             const reply = MOCK_RESPONSES[mockIndex % MOCK_RESPONSES.length];
             mockIndex++;
             resolve(reply);
-        }, 800); // Simula latencia de red
+        }, 800);
     });
 }
 
-// ---- API real de Gemini (activar con USE_REAL_API = true) ----
+
 async function fetchFromGemini(history) {
     const response = await fetch('/api/functions', {
         method: 'POST',
