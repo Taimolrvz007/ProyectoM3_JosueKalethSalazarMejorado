@@ -16,7 +16,7 @@ let chatHistory = [];
 let isWaiting = false;
 
 
-const USE_REAL_API = true;
+const USE_REAL_API = false;
 
 export function setupChat() {
     const chatMessages = document.getElementById('chat-messages');
