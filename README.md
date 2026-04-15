@@ -17,7 +17,7 @@ Nota: Actualmente la API key está agotada, por lo que el chatbot funciona en mo
 
 ## Demo
 
-https://proyecto-m3-josue-kaleth-salazar.vercel.app
+https://proyecto-m3-josue-kaleth-salazar-me.vercel.app
 
 ---
 
